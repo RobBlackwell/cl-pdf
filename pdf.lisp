@@ -561,6 +561,13 @@
     (write-object obj)
     (write-char #\Space *pdf-stream*)))
 
+#+sbcl
+(defun extended-ascii-p (c)
+  "Return true if C is an extended ASCII character (codes 128–255)."
+  (and (characterp c)
+       (let ((code (char-code c)))
+         (<= 128 code 255))))
+
 (defmethod write-object ((obj string) &optional root-level)
   (declare (ignorable root-level))
   #+(and lispworks pdf-binary)
